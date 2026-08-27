@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Oct 22 03:33:23 2021
 
-@author: admin
-"""
 import torch
 import numpy as np
 import torch.nn as nn
@@ -33,34 +28,25 @@ from linear import WNLinear
 
 
 
-torch.manual_seed(0)
-np.random.seed(0)
-
 # os.chdir(r'D:\BaiduNetdiskDownload\zhijie_recently_code\U-FNO_3D-tunning')
 ################################################################
 # 4d fourier layers
 class SpectralConv3d(nn.Module):
-    def __init__(self, in_channels, out_channels, modes1, modes2, forecast_ff, backcast_ff,
-                 fourier_weight, factor, ff_weight_norm,
-                 n_ff_layers, layer_norm, use_fork, dropout):
+    def __init__(self, in_channels, out_channels, modes1, modes2, forecast_ff, backcast_ff, fourier_weight, 
+                 factor, ff_weight_norm, n_ff_layers, layer_norm, use_fork, dropout):
         super(SpectralConv3d, self).__init__()
 
-        """
-        3D Fourier layer. It does FFT, linear transform, and Inverse FFT.  
-        2D Fourier layer. It does FFT, linear transform, and Inverse FFT.    
-        """
+        """2D Fourier layer. It does FFT, linear transform, and Inverse FFT."""
 
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.modes1 = modes1 #Number of Fourier modes to multiply, at most floor(N/2) + 1
         self.modes2 = modes2
-        #self.modes3 = modes3
         self.use_fork = use_fork
         self.fourier_weight = fourier_weight
         
         if not self.fourier_weight:
             self.fourier_weight = nn.ParameterList([])
-            #for n_modes in [modes1, modes2, modes3]:
             for n_modes in [modes1, modes2]:
                 weight = torch.FloatTensor(in_channels, out_channels, n_modes, 2)
                 param = nn.Parameter(weight)
@@ -103,25 +89,6 @@ class SpectralConv3d(nn.Module):
         B, I, S1, S2 = x.shape #  8 3 32 64
         #print("After:", x.shape) # torch.Size([8, 3, 32, 30]) # the in_dim in this case is equal to width
         #print("SpectralConv3d forward fourier:", B, I, S1, S2)
-
-        # # # Dimesion Z # # #
-        """
-        x_ftz = torch.fft.rfft(x, dim=-1, norm='ortho')
-        # x_ft.shape == [batch_size, in_dim, grid_size, grid_size // 2 + 1]
-
-        out_ft = x_ftz.new_zeros(B, I, S1, S2, S3 // 2 + 1)
-        # out_ft.shape == [batch_size, in_dim, grid_size, grid_size // 2 + 1, 2]
-        #print("x_ftz shape:", x_ftz.shape)
-        #print("fourier_weight[2] shape:", self.fourier_weight[2].shape)
-
-        out_ft[:, :, :, :, :self.modes3] = torch.einsum(
-            "bixyz,ioz->boxyz",
-            x_ftz[:, :, :, :, :self.modes3],
-            torch.view_as_complex(self.fourier_weight[2]))
-
-        xz = torch.fft.irfft(out_ft, n=S3, dim=-1, norm='ortho')
-        # x.shape == [batch_size, in_dim, grid_size, grid_size]
-        """
 
 
         # # # Dimesion Y # # #    ####### SHOULD dim=-1 ??? #######
@@ -225,11 +192,12 @@ class U_net(nn.Module):
 
 
 class FNO3d(nn.Module):
-    def __init__(self, modes1, modes2, width, nlayer, T_in, var, T_out, share_weight, factor, ff_weight_norm, n_ff_layers, layer_norm): # width相当于输入输出通道
+    def __init__(self, modes1, modes2, width, nlayer, T_in, var, T_out, share_weight, factor, ff_weight_norm, n_ff_layers, layer_norm): # width
         super(FNO3d, self).__init__()
 
         """
-        input: the solution of the first 5 timesteps + 3 locations (u(1, x, y), ..., u(10, x, y),  x, y, t). It's a constant function in time, except for the last index.
+        input: the solution of the first 5 timesteps + 3 locations (u(1, x, y), ..., u(10, x, y),  x, y, t). 
+        It's a constant function in time, except for the last index.
         input shape: (batchsize, x=64, y=64, z=64, dim=3, c=5+3)
         output: the solution of the next  timestep
         output shape: (batchsize, x=64, y=64, z=64, dim=3, c=1)
@@ -245,7 +213,6 @@ class FNO3d(nn.Module):
         self.fourier_weight = None 
         if share_weight:
             self.fourier_weight = nn.ParameterList([])
-            #for n_modes in [modes1, modes2, modes3]:
             for n_modes in [modes1, modes2]:
                 weight = torch.FloatTensor(width, width, n_modes, 2)
                 param = nn.Parameter(weight)
@@ -259,18 +226,6 @@ class FNO3d(nn.Module):
         # self.fc0 = nn.Linear(T_in*var+3, self.width)  
         self.nlayer = nlayer
 
-        """
-        self.convlayer = nn.ModuleList([SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3, 
-                                                       forecast_ff=None,
-                                                       backcast_ff=None,
-                                                       fourier_weight=self.fourier_weight,
-                                                       factor=factor,
-                                                       ff_weight_norm=ff_weight_norm,
-                                                       n_ff_layers=n_ff_layers,
-                                                       layer_norm=layer_norm,
-                                                       use_fork=False,
-                                                       dropout=0.0).cuda() for i in range(1)])
-        """
 
         self.convlayer = nn.ModuleList([SpectralConv3d(self.width, self.width, self.modes1, self.modes2, 
                                                                forecast_ff=None,
@@ -286,21 +241,16 @@ class FNO3d(nn.Module):
         #self.w = nn.ModuleList([nn.Conv3d(self.width, self.width, 1).cuda() for i in range(1)])
         #self.u = nn.ModuleList([U_net(self.width, self.width, 3, 0).cuda() for i in range(1)])
         
-        #self.enc = nn.Conv3d(var*T_in, width, 1)
         self.enc = nn.Conv2d(var*T_in, width, 1)
 
-        # self.dec_rec = nn.Conv3d(width, var*T_in, 1)
-        #self.dec = nn.Conv3d(width, var*T_out, 1)
         self.dec = nn.Conv2d(width, var*T_out, 1)
         
         # self.fc1 = nn.Linear(self.width, 512)
         # self.fc2 = nn.Linear(512, 1)
 
     def forward(self, x):   #[2, 32, 30, 5, 1, 1] 
-        #batchsize, size_x, size_y, size_z, var, T_in = x.shape[0], x.shape[1], x.shape[2], x.shape[3], x.shape[4], x.shape[5]
         batchsize, size_x, size_y, var, T_in = x.shape[0], x.shape[1], x.shape[2], x.shape[3], x.shape[4]  
         coef = 1./self.nlayer
-
         #print("FNO3D forward:", batchsize, size_x, size_y, var, T_in) #FNO3D forward: 8 32 64 1 1
         
         # grid = self.get_grid(batchsize, size_x, size_y, size_z, x.device) #torch.Size([2, 32, 32, 32, 3])
@@ -350,7 +300,7 @@ class FNO3d(nn.Module):
         # return x  #torch.Size([2, 32, 32, 32, 3, 1])
 
 
-        '''This is the part that reshapes from 32x64 to 64x128'''
+        '''This is the part that reshapes from 32x64 to 64x128, optional to use(?)'''
         #x = F.interpolate(x, scale_factor=2, mode="bilinear", align_corners=False)
 
 
@@ -370,7 +320,7 @@ class FNO3d(nn.Module):
     #     gridz = gridz.reshape(1, 1, 1, size_z, 1).repeat([batchsize, size_x, size_y, 1, 1])
         # return torch.cat((gridx, gridy, gridz), dim=-1).to(device) #
 
-# input size should be [bs,64,64,64,3,5]
+
 ################################################################
 # modes = 10
 # width = 30
@@ -379,7 +329,7 @@ class FNO3d(nn.Module):
 # var = 3
 # T_out = 1
 # device = torch.device('cuda:1')
-# model = FNO3d(modes, modes, modes, width, nlayer, T_in, var, T_out).to(device)  #模型放到GPU上
+# model = FNO3d(modes, modes, modes, width, nlayer, T_in, var, T_out).to(device)  
 # print(count_params(model)) 
 # #(batchsize, x=32, y=32, z=32, c=3, t=5) c is 3 channel 
 # x = torch.rand(2,32,32,32,var,T_in).to(device) #input 12 step, output 1 step
@@ -392,9 +342,9 @@ class FNO3d(nn.Module):
 ########## configs
 ################################################################
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#device = torch.device("cuda")
-print(device)
-#-------------------------------------------------------------------------------需要调节的参数
+#print(device) # cpu
+
+#-------------------------------------------------------------------------------
 #tunning3
 modes = 2
 width = 3 #3n
@@ -407,11 +357,11 @@ var = 1         # controls the number of channels for the expected input
                 # if each grid cell is a scalar -> var = 1 channels
 #-----------------training setting
 batch_size = 8
-epochs = 2
+epochs = 10
 learning_rate = 0.005
 weight_decay_value = 1e-4
 scheduler_step = 5
-scheduler_gamma = 0.5  # 衰减率
+scheduler_gamma = 0.5  # 
 #-------------loss efficient
 alpha = 1
 beta = 0
@@ -421,9 +371,7 @@ factor = 4
 ff_weight_norm = True
 n_ff_layers = 2
 layer_norm = False
-#网络层数
-#显卡内存有没有爆掉cd C:\Program Files\NVIDIA Corporation\NVSMI，nvidia-smi
-#保存模型的文件名
+#cd C:\Program Files\NVIDIA Corporation\NVSMI，nvidia-smi
 #---------------------------------------------------------------------------------------------
 
 #print(f"modes: {modes}\nwidth: {width}\nnlayer: {nlayer}\nepochs: {epochs}\nlearning_rate: {learning_rate}\n"
@@ -431,12 +379,16 @@ layer_norm = False
 
 ################################################################
 ########## load data
-#------------------------------------------------上面4行运行一次后保存出数据，下次直接加载数据
-#vor_data = np.load('/home/zliu2/project/uq4turbu/datasets/vel_2sim_20step_32x30_scalar.npy') #
-#vor_data = vor_data[0:45,...]
+#------------------------------------------------
 
-path_lr_100 = "/home/zliu2/project/Weatherbench_dataset/2m_temp_both_res_1984_100_days/2m_temperature_low_res_1984_100.nc"
-path_hr_100 = "/home/zliu2/project/Weatherbench_dataset/2m_temp_both_res_1984_100_days/2m_temperature_high_res_1984_100.nc"
+#path_lr_100 = "/home/zliu2/UiO_Life_Science/uq4downscaling/Datasets/Weatherbench/2m_temp_both_res_1984_100_days/2m_temperature_low_res_1984_100.nc"
+#path_hr_100 = "/home/zliu2/UiO_Life_Science/uq4downscaling/Datasets/Weatherbench/2m_temp_both_res_1984_100_days/2m_temperature_high_res_1984_100.nc"
+path_lr_100 = "~/UiO_Life_Science/uq4downscaling/Datasets/Weatherbench/2m_temp_both_res_1984_100_days/2m_temperature_low_res_1984_100.nc"
+path_hr_100 = "~/UiO_Life_Science/uq4downscaling/Datasets/Weatherbench/2m_temp_both_res_1984_100_days/2m_temperature_high_res_1984_100.nc"
+
+torch.manual_seed(0)
+np.random.seed(0)
+
 
 import xarray as xr
 
@@ -449,18 +401,49 @@ input_ds = torch.from_numpy(input_ds)
 #print(input_ds.shape) # torch.Size([100, 32, 64])
 input_ds = input_ds[:, np.newaxis, ...]
 #print(input_ds.shape) # torch.Size([100, 1, 32, 64]) -> [batch, channels, x dim, y dim]
+
 '''Interpolate input from 32x64 to 64x128'''
-input_ds = F.interpolate(input_ds, scale_factor=2, mode="bilinear", align_corners=False)
-#print(input_ds.shape) # orch.Size([100, 1, 64, 128])
+input_ds = F.interpolate(input_ds, scale_factor=2, mode="bilinear", align_corners=False) # [100, 1, 64, 128]
+
+
+#input_ds = torch.zeros(100, 1, 64, 128)
+#for i in range(len(input_ds)):
+#    input_mean, input_std = input_ds_[i,0].mean(), input_ds_[i,0].std()
+#    input_ds[i,0] = (input_ds_[i,0] - input_mean)/input_std
+
+
+
+#experiment_input = input_ds.numpy()
+#experiment_input_sample = experiment_input[10, 0]
+#plt.imshow(experiment_input_sample, cmap="coolwarm"); plt.colorbar(); plt.show()
+
+
 
 input_ds = input_ds[..., np.newaxis]
 #print(input_ds.shape) # torch.Size([100, 1, 64, 128, 1])
 
+
+
+#experiment_input = input_ds.numpy()
+#experiment_input_sample = experiment_input[10, 0]
+#print(experiment_input_sample[20, 120]) # [293.20517]
+
+
 output_ds = xr.open_dataset(path_hr_100)
 output_ds = output_ds["t2m"].values
-output_ds = torch.from_numpy(output_ds)
-#print(output_ds.shape) # torch.Size([100, 64, 128])
-output_ds = output_ds[..., np.newaxis]
+output_ds = torch.from_numpy(output_ds) # torch.Size([100, 64, 128])
+
+
+#output_ds = torch.zeros(100, 64, 128)
+#for i in range(len(output_ds)):
+#    output_mean, output_std = output_ds_[i].mean(), output_ds_[i].std()
+#    output_ds[i] = (output_ds_[i] - output_mean)/output_std
+
+
+#output_ds = torch.from_numpy(output_ds) # torch.Size([100, 64, 128])
+output_ds = output_ds[..., np.newaxis] # ([100, 64, 128, 1])
+
+#print(output_ds[10, 20, 120]) # tensor([293.3869])
 
 
 #print(input_ds.data_vars) # t2m (time, lat, lon) float32 819kB
@@ -484,22 +467,20 @@ output_ds = output_ds[..., np.newaxis]
 
 #input_ds = torch.from_numpy(input_ds)
 #output_ds = torch.from_numpy(output_ds)
-
-
 #print(type(input_ds)) # torch.Tensor
 
 for i in range(len(input_ds)):
     input_list.append(input_ds[i, ...])
     output_list.append(output_ds[i, ...])
 
-
 #print(type(vor_data[0,0:0+T_in,...])); print(type(output_6m5)) # <class 'torch.Tensor'>
 #print(len(input_list), len(output_list)) # 38, 38
+
 input_set = torch.stack(input_list) 
-print(input_set.shape) # torch.Size([100, 1, 64, 128, 1])
+#print(input_set.shape) # torch.Size([100, 1, 64, 128, 1])
 
 output_set = torch.stack(output_list) 
-print(output_set.shape) # torch.Size([100, 64, 128, 1])
+#print(output_set.shape) # torch.Size([100, 64, 128, 1])
 
 '''[simulations, len of a single state, x dim, y dim, z dim, vector] -> 
 [total number of states, x dim, y dim, z dim, vector, len of a single state]
@@ -510,20 +491,42 @@ Note that the total number of states = number of simulations * timesteps each si
 '''
 
 input_set = input_set.permute(0,2,3,4,1) 
-print(input_set.shape) # torch.Size([100, 64, 128, 1, 1])
+#print(input_set.shape) # torch.Size([100, 64, 128, 1, 1])
 
 
+### Normalization
+n_samples = len(input_set)
+train_fraction = 0.8
+generator = torch.Generator().manual_seed(0)
+indices = torch.randperm(n_samples, generator=generator)
+n_train = int(train_fraction * n_samples)
+train_idx = indices[:n_train]
+test_idx = indices[n_train:]
+
+x_train = input_set[train_idx]
+y_train = output_set[train_idx]
+x_test = input_set[test_idx]
+y_test = output_set[test_idx]
+
+x_mean = x_train.mean()
+x_std = x_train.std()
+y_mean = y_train.mean()
+y_std = y_train.std()
+
+x_train_norm = (x_train - x_mean) / x_std
+y_train_norm = (y_train - y_mean) / y_std
+x_test_norm = (x_test - x_mean) / x_std
+y_test_norm = (y_test - y_mean) / y_std
+
+train_dataset = torch.utils.data.TensorDataset(x_train_norm, y_train_norm)
+test_dataset = torch.utils.data.TensorDataset(x_test_norm, y_test_norm)
 
 
-
-full_set = torch.utils.data.TensorDataset(input_set, output_set) # len(full_set) = 38
-train_dataset, test_dataset = torch.utils.data.random_split(full_set, [int(0.8*len(full_set)), 
-                                                                        len(full_set)-int(0.8*len(full_set))])
+#full_set = torch.utils.data.TensorDataset(input_set, output_set) # len(full_set) = 38
+#train_dataset, test_dataset = torch.utils.data.random_split(full_set, [int(0.8*len(full_set)), len(full_set)-int(0.8*len(full_set))])
 
 #print(type(train_dataset)) # <class 'torch.utils.data.dataset.Subset'>
 #print(len(train_dataset), len(test_dataset)) # 80, 20
-
-
 
 
 
@@ -538,106 +541,105 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=batch
 
 
 
+if __name__ == "__main__":
+    ################################################################
+    # training and evaluation
+    ################################################################
+    model = FNO3d(modes, modes, width, nlayer, T_in, var, T_out, share_weight, factor, ff_weight_norm, n_ff_layers, layer_norm).to(device)
+    #print(count_params(model)) # 
 
 
-################################################################
-# training and evaluation
-################################################################
-model = FNO3d(modes, modes, width, nlayer, T_in, var, T_out, share_weight, factor, ff_weight_norm, n_ff_layers, layer_norm).to(device)
-print(count_params(model)) # modes=2, width=3 184
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay_value)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=scheduler_step, gamma=scheduler_gamma)
 
 
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=weight_decay_value)
-scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=scheduler_step, gamma=scheduler_gamma)
+    train_pre = []
+    train_recon = []
+    test_pre = []
+    test_recon = []
 
 
-train_pre = []
-train_recon = []
-test_pre = []
-test_recon = []
+    myloss = LpLoss()  # loss function, need utilize3 file
+    #criterion = torch.nn.MSELoss()
+    # myloss = torch.nn.MSELoss(reduction='mean')
 
 
-myloss = LpLoss()  # 定义loss function, need utilize3 file
-#criterion = torch.nn.MSELoss()
-# myloss = torch.nn.MSELoss(reduction='mean')
+    save_path = "/home/zliu2/UiO_Life_Science/uq4downscaling/NOs/F-IFNO/weights/t2m_1984_100_days/"
 
-
-
-
-
-for ep in range(epochs):
-    print(f"Training epoch {ep+1}")
-    model.train()
-    t1 = default_timer()
-    train_recons_full = 0
-    train_pred_full = 0
-    for xx, yy in train_loader:
-        l_recons = 0
-        bs = xx.shape[0] # batchsize
-        xx = xx.to(device)
-        yy = yy.to(device)
-        pre, im_re = model(xx)  # prediction, reconstruction 
-        print(xx.shape) # torch.Size([8, 32, 64, 1, 1])
-        print(yy.shape) # torch.Size([8, 64, 128, 1])
-        print(pre.shape) # torch.Size([8, 32, 64, 1, 1])
-        print(im_re.shape) # torch.Size([8, 32, 64, 1, 1])
-
-        print("Model prediction made")
-        l_recons = myloss(im_re.reshape(bs, -1), xx.reshape(bs, -1)) #[BS, 32, 32, 32, 3 T_in]
-        l_pred = myloss(pre.reshape(bs, -1), yy.reshape(bs, -1))    #[BS, 64, 64, 64, 3, T_out]
-        loss = alpha*l_pred + beta*l_recons  # alpha and beta 可以调整参数
-
-        train_pred_full += l_pred.item()
-        train_recons_full += l_recons.item()
-
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-    scheduler.step()
-    train_pred_full = train_pred_full / len(train_loader)
-    train_recons_full = train_recons_full / len(train_loader)
-    train_pre.append(train_pred_full)
-    train_recon.append(train_recons_full)
-
-
-    test_pred_full = 0
-    test_recons_full = 0
-    with torch.no_grad():
-        for xx, yy in test_loader:
-            loss = 0
-            bs = xx.shape[0]
+    for ep in range(epochs):
+        print(f"Training epoch {ep+1}")
+        model.train()
+        t1 = default_timer()
+        train_recons_full = 0
+        train_pred_full = 0
+        for xx, yy in train_loader:
+            l_recons = 0
+            bs = xx.shape[0] # batchsize
             xx = xx.to(device)
             yy = yy.to(device)
-            pre,im_re = model(xx)
+            pre, im_re = model(xx)  # prediction, reconstruction 
+            #print(xx.shape) # torch.Size([8, 32, 64, 1, 1])
+            #print(yy.shape) # torch.Size([8, 64, 128, 1])
+            #print(pre.shape) # torch.Size([8, 32, 64, 1, 1])
+            #print(im_re.shape) # torch.Size([8, 32, 64, 1, 1])
 
-            l_recons = myloss(im_re.reshape(bs, -1), xx.reshape(bs, -1)) 
-            l_pred = myloss(pre.reshape(bs, -1), yy.reshape(bs, -1))    
+            #print("Model prediction made")
+            l_recons = myloss(im_re.reshape(bs, -1), xx.reshape(bs, -1)) #[BS, 32, 32, 32, 3 T_in]
+            l_pred = myloss(pre.reshape(bs, -1), yy.reshape(bs, -1))    #[BS, 64, 64, 64, 3, T_out]
+            loss = alpha*l_pred + beta*l_recons  # alpha and beta 可以调整参数
 
-            test_pred_full += l_pred.item()
-            test_recons_full += l_recons.item()
+            train_pred_full += l_pred.item()
+            train_recons_full += l_recons.item()
 
-        test_pred_full = test_pred_full / len(test_loader)
-        test_recons_full = test_recons_full / len(test_loader)
-        test_pre.append(test_pred_full)
-        test_recon.append(test_recons_full)
-
-    t2 = default_timer()
-    allocated_memory = torch.cuda.memory_allocated() / (1024 ** 2)  # 转换为MB
-    reserved_memory = torch.cuda.memory_reserved() / (1024 ** 2)  # 转换为MB
-
-    if ep == 0:
-        print("Epoch,","Time,","[Train Recons MSE],","[Train Pred MSE],","[Test Recons MSE],","[Test Pred MSE]","[Allocated Memory]","[Reserved Memory]")
-    print(ep, "%.2f"%(t2-t1), "%.6f"%(train_recons_full), "%.6f"%(train_pred_full), 
-          "%.6f"%(test_recons_full), "%.6f"%(test_pred_full), "%.2f"%(allocated_memory), "%.2f"%(reserved_memory))
-    #torch.save(model.state_dict(), f'new_m12w90n40g45fac4nff2_{ep+1}ep1e8w.pth')  # 注意修改保存模型格式
-
-
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+        scheduler.step()
+        train_pred_full = train_pred_full / len(train_loader)
+        train_recons_full = train_recons_full / len(train_loader)
+        train_pre.append(train_pred_full)
+        train_recon.append(train_recons_full)
 
 
 
+        test_pred_full = 0
+        test_recons_full = 0
+        with torch.no_grad():
+            for xx, yy in test_loader:
+                loss = 0
+                bs = xx.shape[0]
+                xx = xx.to(device)
+                yy = yy.to(device)
+                pre,im_re = model(xx)
 
-#MSE_save = np.dstack((train_pre, train_recon,test_pre,test_recon)).squeeze()
-#np.savetxt('./loss_data_new.dat', MSE_save, fmt="%16.7f")
+                l_recons = myloss(im_re.reshape(bs, -1), xx.reshape(bs, -1)) 
+                l_pred = myloss(pre.reshape(bs, -1), yy.reshape(bs, -1))    
+
+                test_pred_full += l_pred.item()
+                test_recons_full += l_recons.item()
+
+            test_pred_full = test_pred_full / len(test_loader)
+            test_recons_full = test_recons_full / len(test_loader)
+            test_pre.append(test_pred_full)
+            test_recon.append(test_recons_full)
+
+        t2 = default_timer()
+        allocated_memory = torch.cuda.memory_allocated() / (1024 ** 2)  # Convert to MB
+        reserved_memory = torch.cuda.memory_reserved() / (1024 ** 2)  # Convert to MB
+
+        if ep == 0:
+            print("Epoch,","Time,","[Train Recons MSE],","[Train Pred MSE],","[Test Recons MSE],","[Test Pred MSE]","[Allocated Memory]","[Reserved Memory]")
+        print(ep, "%.2f"%(t2-t1), "%.6f"%(train_recons_full), "%.6f"%(train_pred_full), 
+            "%.6f"%(test_recons_full), "%.6f"%(test_pred_full), "%.2f"%(allocated_memory), "%.2f"%(reserved_memory))
+        torch.save(model.state_dict(), f'{save_path}F_IFNO_t2m_1984_100_ep{ep+1}.pth')  
 
 
-#torch.save(model.state_dict(), 'm12w90n40g45_30ep1e8w.pth')  # 注意修改保存模型格式
+
+
+
+
+    #MSE_save = np.dstack((train_pre, train_recon,test_pre,test_recon)).squeeze()
+    #np.savetxt('./loss_data_new.dat', MSE_save, fmt="%16.7f")
+
+
+    #torch.save(model.state_dict(), 'm12w90n40g45_30ep1e8w.pth')  # 
