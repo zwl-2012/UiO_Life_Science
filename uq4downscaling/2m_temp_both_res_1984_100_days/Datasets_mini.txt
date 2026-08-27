@@ -1,0 +1,4 @@
+Small datasets
+
+Low resolution (32x64): 2m_temperature_high_res_1984_100.nc
+High resolution (64x128): 2m_temperature_low_res_1984_100.nc
