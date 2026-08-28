@@ -5,3 +5,5 @@
 2) 2D downscaling with multi-variable input and single variable output
 
 3) 2D downscaling with multi-variable input and multivariable output
+
+4) Generalize the model to handle single and multi-variables
