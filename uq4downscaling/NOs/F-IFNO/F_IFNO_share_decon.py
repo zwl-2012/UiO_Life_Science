@@ -399,9 +399,8 @@ layer_norm = False
 ################################################################
 ########## load data
 #------------------------------------------------上面4行运行一次后保存出数据，下次直接加载数据
-vor_data = np.load('/home/zliu2/project/uq4turbu/datasets/vel_2sim_20step_32x30x5_vec3.npy') #
-#vor_data = vor_data[0:45,...]
-vor_data = torch.from_numpy(vor_data) #
+vor_data = np.load('/home/zliu2/UiO_Life_Science/uq4downscaling/Datasets/uq4turbu_data/uq4turbu_mini_2sim_20steps/vel_2sim_20step_32x30x5_vec3.npy')
+vor_data = torch.from_numpy(vor_data) 
 
 #print(type(vor_data)) # <class 'torch.Tensor'>
 #print(vor_data.shape) #torch.Size([2, 20, 32, 30, 5, 3])

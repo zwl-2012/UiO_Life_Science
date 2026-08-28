@@ -8,7 +8,6 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 from utilities3 import *
 
-
 import operator
 from functools import reduce
 from functools import partial
@@ -21,20 +20,18 @@ from einops import rearrange
 from feedforward import FeedForward
 from linear import WNLinear
 
-from F_IFNO_share_decon_2D_downscale import FNO3d, test_loader, y_mean, y_std, ABBA
-print(ABBA)
+from F_IFNO_share_decon_2D_downscale import FNO3d, test_loader, y_mean, y_std
 
 
 ########## configs
 ################################################################
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-#print(device) # cpu
 
 #-------------------------------------------------------------------------------
 #tunning3
-modes = 2
-width = 3 #3n
-nlayer = 4
+modes = 10
+width = 10 #3n
+nlayer = 10
 #----------------data config
 T_in = 1       # input step
 T_out = 1       # output step
@@ -42,10 +39,10 @@ var = 1         # controls the number of channels for the expected input
                 # if each grid cell is a vector of size 3 -> var = 3 channels
                 # if each grid cell is a scalar -> var = 1 channels
 #-----------------training setting
-batch_size = 8
-epochs = 1
-learning_rate = 0.005
-weight_decay_value = 1e-4
+batch_size = 5
+epochs = 20
+learning_rate = 0.0005
+weight_decay_value = 1e-5
 scheduler_step = 5
 scheduler_gamma = 0.5  # 
 #-------------loss efficient
@@ -58,22 +55,19 @@ ff_weight_norm = True
 n_ff_layers = 2
 layer_norm = False
 
-
-
 ################################################################
 ######## 
 ################################################################
 model_predict = FNO3d(modes, modes, width, nlayer, T_in, var, T_out, share_weight, factor, ff_weight_norm, n_ff_layers, layer_norm).to(device)
 
-weight_pth = f"/home/zliu2/UiO_Life_Science/uq4downscaling/NOs/F-IFNO/weights/t2m_1984_100_days/F_IFNO_t2m_1984_100_ep{epochs}.pth"
+weight_pth = f"/home/zliu2/UiO_Life_Science/uq4downscaling/NOs/F-IFNO/weights/t2m_1985_1000_days/F_IFNO_t2m_1985_1000_ep{epochs}.pth"
 checkpoint = torch.load(weight_pth, map_location=device)
 #print(checkpoint.keys())
 model_predict.load_state_dict(checkpoint)
 model_predict.eval()
 
 
-predictions_all = []
-targets_all = []
+predictions_all = []; targets_all = []
 
 with torch.no_grad():
     for pre, tar in test_loader:
@@ -90,24 +84,14 @@ with torch.no_grad():
         predictions_all.append(predicted_original)
         targets_all.append(target_original)
 
-#print(len(predictions_all)) # 3 batches, each batch size is 8
-#print(len(targets_all)) # 3 batches, each batch size is 8
 
 ### Merge
-predictions_all = torch.cat(predictions_all, dim=0) # torch.Size([20, 64, 128, 1, 1])
+predictions_all = torch.cat(predictions_all, dim=0) # ([20, 64, 128, 1, 1])
 predictions_all = predictions_all.permute(0,4,1,2,3) # [20, 1, 64, 128, 1]
-targets_all = torch.cat(targets_all, dim=0) # torch.Size([20, 64, 128, 1])
-
+targets_all = torch.cat(targets_all, dim=0) # ([20, 64, 128, 1])
 predictions_all = predictions_all.numpy() # (20, 1, 64, 128, 1)
 targets_all = targets_all.numpy() # (20, 64, 128, 1)
-
-
-#print(predictions_all[10])
-#print(targets_all[10])
-
 predictions_all = predictions_all.squeeze(-1) # (20, 1, 64, 128)
-#predictions_all = predictions_all[:, np.newaxis, ...] # (20, 1, 64, 128)
-
 targets_all = targets_all.squeeze(-1) # (20, 64, 128)
 targets_all = targets_all[:, np.newaxis, ...] # (20, 1, 64, 128)
 
