@@ -30,3 +30,4 @@ The folder includes the following:
 * The weights are stored for F-IFNO and F-IUFNO, but not IFNO and IUFNO due to their size
 * In each model, there is a stored file for the mean and std from the training set (*f_ifno_mean_std.py* and *mean_std_lst.pth*)
 * Weatherbench dataset references can be found there
+* The folder **uq4downscaling** is old variant
