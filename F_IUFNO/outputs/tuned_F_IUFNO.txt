@@ -1,0 +1,125 @@
+Training epoch 1
+Epoch |  Time |  [Train Pred MSE] |  [Val Pred MSE] |  [Allocated MB] |  [Reserved MB] | 
+0 | 556.46 | 0.007527 | 0.004028 |41.30 | 7248.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IUFNO/weights/m12_w90_n40/F_IFNO_t2m_1.pth
+Training epoch 2
+1 | 553.65 | 0.002882 | 0.004083 |41.30 | 7248.00
+Training epoch 3
+2 | 554.41 | 0.002393 | 0.003738 |41.30 | 7248.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IUFNO/weights/m12_w90_n40/F_IFNO_t2m_3.pth
+Training epoch 4
+3 | 553.87 | 0.002103 | 0.003663 |41.30 | 7248.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IUFNO/weights/m12_w90_n40/F_IFNO_t2m_4.pth
+Training epoch 5
+4 | 553.82 | 0.001890 | 0.003655 |41.30 | 7248.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IUFNO/weights/m12_w90_n40/F_IFNO_t2m_5.pth
+Training epoch 6
+5 | 553.77 | 0.001611 | 0.003622 |41.30 | 7248.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IUFNO/weights/m12_w90_n40/F_IFNO_t2m_6.pth
+Training epoch 7
+6 | 553.37 | 0.001541 | 0.003642 |41.30 | 7248.00
+Training epoch 8
+7 | 550.21 | 0.001473 | 0.003662 |41.30 | 7248.00
+Training epoch 9
+8 | 550.31 | 0.001418 | 0.003688 |41.30 | 7248.00
+Training epoch 10
+9 | 550.29 | 0.001370 | 0.003715 |41.30 | 7248.00
+Training epoch 11
+10 | 550.37 | 0.001260 | 0.003723 |41.30 | 7248.00
+Training epoch 12
+11 | 550.09 | 0.001238 | 0.003708 |41.30 | 7248.00
+Training epoch 13
+12 | 550.38 | 0.001215 | 0.003718 |41.30 | 7248.00
+Training epoch 14
+13 | 550.96 | 0.001195 | 0.003716 |41.30 | 7248.00
+Training epoch 15
+14 | 550.58 | 0.001176 | 0.003748 |41.30 | 7248.00
+Training epoch 16
+15 | 550.55 | 0.001124 | 0.003765 |41.30 | 7248.00
+Training epoch 17
+16 | 550.16 | 0.001114 | 0.003779 |41.30 | 7248.00
+Training epoch 18
+17 | 550.42 | 0.001105 | 0.003789 |41.30 | 7248.00
+Training epoch 19
+18 | 550.10 | 0.001096 | 0.003807 |41.30 | 7248.00
+Training epoch 20
+19 | 549.79 | 0.001088 | 0.003804 |41.30 | 7248.00
+Training epoch 21
+20 | 549.13 | 0.001061 | 0.003817 |41.30 | 7248.00
+Training epoch 22
+21 | 549.80 | 0.001056 | 0.003830 |41.30 | 7248.00
+Training epoch 23
+22 | 548.78 | 0.001052 | 0.003836 |41.30 | 7248.00
+Training epoch 24
+23 | 550.83 | 0.001048 | 0.003848 |41.30 | 7248.00
+Training epoch 25
+24 | 550.75 | 0.001043 | 0.003854 |41.30 | 7248.00
+Training epoch 26
+25 | 550.61 | 0.001030 | 0.003855 |41.30 | 7248.00
+Training epoch 27
+26 | 550.38 | 0.001027 | 0.003858 |41.30 | 7248.00
+Training epoch 28
+27 | 550.56 | 0.001025 | 0.003865 |41.30 | 7248.00
+Training epoch 29
+28 | 550.53 | 0.001023 | 0.003872 |41.30 | 7248.00
+Training epoch 30
+29 | 549.64 | 0.001021 | 0.003867 |41.30 | 7248.00
+Training epoch 31
+30 | 549.54 | 0.001014 | 0.003874 |41.30 | 7248.00
+Training epoch 32
+31 | 548.66 | 0.001013 | 0.003878 |41.30 | 7248.00
+Training epoch 33
+32 | 550.24 | 0.001011 | 0.003875 |41.30 | 7248.00
+Training epoch 34
+33 | 548.15 | 0.001010 | 0.003883 |41.30 | 7248.00
+Training epoch 35
+34 | 550.25 | 0.001009 | 0.003883 |41.30 | 7248.00
+Training epoch 36
+35 | 549.36 | 0.001006 | 0.003888 |41.30 | 7248.00
+Training epoch 37
+36 | 548.33 | 0.001005 | 0.003884 |41.30 | 7248.00
+Training epoch 38
+37 | 547.75 | 0.001004 | 0.003890 |41.30 | 7248.00
+Training epoch 39
+38 | 549.46 | 0.001004 | 0.003892 |41.30 | 7248.00
+Training epoch 40
+39 | 550.53 | 0.001003 | 0.003892 |41.30 | 7248.00
+Training epoch 41
+40 | 548.44 | 0.001001 | 0.003892 |41.30 | 7248.00
+Training epoch 42
+41 | 550.15 | 0.001001 | 0.003893 |41.30 | 7248.00
+Training epoch 43
+42 | 550.52 | 0.001001 | 0.003895 |41.30 | 7248.00
+Training epoch 44
+43 | 551.08 | 0.001000 | 0.003894 |41.30 | 7248.00
+Training epoch 45
+44 | 550.92 | 0.001000 | 0.003893 |41.30 | 7248.00
+Training epoch 46
+45 | 551.04 | 0.000999 | 0.003893 |41.30 | 7248.00
+Training epoch 47
+46 | 550.89 | 0.000999 | 0.003896 |41.30 | 7248.00
+Training epoch 48
+47 | 550.62 | 0.000999 | 0.003894 |41.30 | 7248.00
+Training epoch 49
+48 | 550.22 | 0.000999 | 0.003895 |41.30 | 7248.00
+Training epoch 50
+49 | 550.38 | 0.000999 | 0.003894 |41.30 | 7248.00
+
+---------- OPTIMAL HYPERPARAMETERS FOR CONFIG ----------
+++++++++++ F-IFNO ++++++++++
+Modes=12 | width=90 | nlayer=40
+Input variables = 3 | Output variables = 1
+Epochs=40 | Batch size=5
+Learning rate=0.0005 | Weight decay=1e-08
+Scheduler step=5 | Gamma=0.5
+Factor scale (width)=1
+FF weight norm=True | FF layers=2
+++++++++++++++++++++++++++++++
+Optimal epoch = 6 | MSELoss = 0.003622
+
+
+-----------------------------
+OPTIMAL DONE
+------------------------------
+
+-------------------- TUNING DONE --------------------
