@@ -1,0 +1,157 @@
+Training epoch 1
+Epoch |  Time |  [Train Pred MSE] |  [Val Pred MSE] |  [Allocated MB] |  [Reserved MB] | 
+0 | 249.23 | 0.017675 | 0.009510 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_1.pth
+Training epoch 2
+1 | 247.26 | 0.008509 | 0.008436 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_2.pth
+Training epoch 3
+2 | 247.34 | 0.007509 | 0.007684 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_3.pth
+Training epoch 4
+3 | 249.40 | 0.006710 | 0.006993 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_4.pth
+Training epoch 5
+4 | 247.65 | 0.005978 | 0.006548 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_5.pth
+Training epoch 6
+5 | 247.25 | 0.005356 | 0.006136 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_6.pth
+Training epoch 7
+6 | 246.88 | 0.005042 | 0.005858 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_7.pth
+Training epoch 8
+7 | 248.02 | 0.004772 | 0.005639 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_8.pth
+Training epoch 9
+8 | 247.75 | 0.004536 | 0.005496 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_9.pth
+Training epoch 10
+9 | 248.00 | 0.004342 | 0.005368 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_10.pth
+Training epoch 11
+10 | 246.78 | 0.004147 | 0.005250 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_11.pth
+Training epoch 12
+11 | 248.16 | 0.004063 | 0.005172 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_12.pth
+Training epoch 13
+12 | 247.51 | 0.003982 | 0.005128 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_13.pth
+Training epoch 14
+13 | 248.04 | 0.003908 | 0.005072 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_14.pth
+Training epoch 15
+14 | 247.04 | 0.003838 | 0.005086 |23.61 | 4060.00
+Training epoch 16
+15 | 247.36 | 0.003754 | 0.005017 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_16.pth
+Training epoch 17
+16 | 247.84 | 0.003721 | 0.004993 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_17.pth
+Training epoch 18
+17 | 247.41 | 0.003688 | 0.004983 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_18.pth
+Training epoch 19
+18 | 248.09 | 0.003657 | 0.004982 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_19.pth
+Training epoch 20
+19 | 247.33 | 0.003628 | 0.004970 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_20.pth
+Training epoch 21
+20 | 247.74 | 0.003586 | 0.004941 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_21.pth
+Training epoch 22
+21 | 247.12 | 0.003571 | 0.004930 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_22.pth
+Training epoch 23
+22 | 248.11 | 0.003556 | 0.004927 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_23.pth
+Training epoch 24
+23 | 246.70 | 0.003542 | 0.004914 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_24.pth
+Training epoch 25
+24 | 247.76 | 0.003528 | 0.004901 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_25.pth
+Training epoch 26
+25 | 246.69 | 0.003506 | 0.004901 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_26.pth
+Training epoch 27
+26 | 247.15 | 0.003499 | 0.004894 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_27.pth
+Training epoch 28
+27 | 247.93 | 0.003492 | 0.004902 |23.61 | 4060.00
+Training epoch 29
+28 | 247.50 | 0.003485 | 0.004894 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_29.pth
+Training epoch 30
+29 | 247.46 | 0.003478 | 0.004882 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_30.pth
+Training epoch 31
+30 | 247.97 | 0.003467 | 0.004881 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_31.pth
+Training epoch 32
+31 | 247.74 | 0.003463 | 0.004883 |23.61 | 4060.00
+Training epoch 33
+32 | 248.02 | 0.003460 | 0.004877 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_33.pth
+Training epoch 34
+33 | 247.36 | 0.003456 | 0.004876 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_34.pth
+Training epoch 35
+34 | 246.68 | 0.003453 | 0.004874 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_35.pth
+Training epoch 36
+35 | 246.67 | 0.003447 | 0.004872 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_36.pth
+Training epoch 37
+36 | 248.10 | 0.003445 | 0.004873 |23.61 | 4060.00
+Training epoch 38
+37 | 247.53 | 0.003443 | 0.004874 |23.61 | 4060.00
+Training epoch 39
+38 | 247.46 | 0.003442 | 0.004874 |23.61 | 4060.00
+Training epoch 40
+39 | 247.98 | 0.003440 | 0.004869 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_40.pth
+Training epoch 41
+40 | 247.66 | 0.003437 | 0.004869 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_41.pth
+Training epoch 42
+41 | 247.98 | 0.003436 | 0.004868 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_42.pth
+Training epoch 43
+42 | 246.95 | 0.003435 | 0.004868 |23.61 | 4060.00
+Saving: /fp/projects01/ec35/ec-zhenwl/F-IFNO/weights/m12_w90_n40_lr5e4/F_IFNO_t2m_43.pth
+Training epoch 44
+43 | 247.11 | 0.003434 | 0.004869 |23.61 | 4060.00
+Training epoch 45
+44 | 246.74 | 0.003433 | 0.004870 |23.61 | 4060.00
+Training epoch 46
+45 | 246.47 | 0.003432 | 0.004868 |23.61 | 4060.00
+Training epoch 47
+46 | 247.03 | 0.003431 | 0.004869 |23.61 | 4060.00
+Training epoch 48
+47 | 247.17 | 0.003431 | 0.004869 |23.61 | 4060.00
+Training epoch 49
+48 | 247.27 | 0.003430 | 0.004868 |23.61 | 4060.00
+Training epoch 50
+49 | 246.60 | 0.003430 | 0.004869 |23.61 | 4060.00
+
+---------- OPTIMAL HYPERPARAMETERS FOR CONFIG ----------
+++++++++++ F-IFNO ++++++++++
+Modes=12 | width=90 | nlayer=40
+Input variables = 3 | Output variables = 1
+Epochs=40 | Batch size=5
+Learning rate=0.0005 | Weight decay=1e-08
+Scheduler step=5 | Gamma=0.5
+Factor scale (width)=1
+FF weight norm=True | FF layers=2
+++++++++++++++++++++++++++++++
+Optimal epoch = 43 | MSELoss = 0.004868
+
+
+-----------------------------
+OPTIMAL DONE
+------------------------------
+
+-------------------- TUNING DONE --------------------
