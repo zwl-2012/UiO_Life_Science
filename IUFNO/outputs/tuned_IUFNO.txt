@@ -1,0 +1,64 @@
+Training epoch 1
+Epoch |  Time |  [Train Pred MSE] |  [Val Pred MSE] |  [Allocated MB] |  [Reserved MB] | 
+0 | 808.52 | 0.007268 | 0.004131 |178.27 | 4912.00
+Saving: /fp/projects01/ec35/ec-zhenwl/IUFNO/weights/m12_w90_n40/F_IFNO_t2m_1.pth
+Training epoch 2
+1 | 804.64 | 0.002785 | 0.003928 |178.27 | 4912.00
+Saving: /fp/projects01/ec35/ec-zhenwl/IUFNO/weights/m12_w90_n40/F_IFNO_t2m_2.pth
+Training epoch 3
+2 | 806.05 | 0.002243 | 0.003998 |178.27 | 4912.00
+Training epoch 4
+3 | 806.05 | 0.001913 | 0.003856 |178.27 | 4912.00
+Saving: /fp/projects01/ec35/ec-zhenwl/IUFNO/weights/m12_w90_n40/F_IFNO_t2m_4.pth
+Training epoch 5
+4 | 805.91 | 0.001680 | 0.003876 |178.27 | 4912.00
+Training epoch 6
+5 | 805.84 | 0.001388 | 0.003837 |178.27 | 4912.00
+Saving: /fp/projects01/ec35/ec-zhenwl/IUFNO/weights/m12_w90_n40/F_IFNO_t2m_6.pth
+Training epoch 7
+6 | 805.79 | 0.001310 | 0.003917 |178.27 | 4912.00
+Training epoch 8
+7 | 805.61 | 0.001239 | 0.003898 |178.27 | 4912.00
+Training epoch 9
+8 | 804.71 | 0.001178 | 0.003940 |178.27 | 4912.00
+Training epoch 10
+9 | 805.15 | 0.001125 | 0.003972 |178.27 | 4912.00
+Training epoch 11
+10 | 804.95 | 0.001011 | 0.003991 |178.27 | 4912.00
+Training epoch 12
+11 | 802.09 | 0.000987 | 0.004004 |178.27 | 4912.00
+Training epoch 13
+12 | 800.04 | 0.000963 | 0.004041 |178.27 | 4912.00
+Training epoch 14
+13 | 800.81 | 0.000941 | 0.004066 |178.27 | 4912.00
+Training epoch 15
+14 | 800.28 | 0.000921 | 0.004091 |178.27 | 4912.00
+Training epoch 16
+15 | 800.47 | 0.000868 | 0.004121 |178.27 | 4912.00
+Training epoch 17
+16 | 800.53 | 0.000858 | 0.004136 |178.27 | 4912.00
+Training epoch 18
+17 | 800.06 | 0.000848 | 0.004161 |178.27 | 4912.00
+Training epoch 19
+18 | 800.15 | 0.000838 | 0.004173 |178.27 | 4912.00
+Training epoch 20
+19 | 800.14 | 0.000829 | 0.004188 |178.27 | 4912.00
+No further improvements made from epochs=6 to epochs=20
+
+
+---------- OPTIMAL HYPERPARAMETERS FOR CONFIG ----------
+++++++++++ F-IFNO ++++++++++
+Modes=12 | width=90 | nlayer=40
+Input variables = 3 | Output variables = 1
+Epochs=40 | Batch size=5
+Learning rate=0.0005 | Weight decay=1e-08
+Scheduler step=5 | Gamma=0.5
+++++++++++++++++++++++++++++++
+Optimal epoch = 6 | MSELoss = 0.003837
+
+
+-----------------------------
+OPTIMAL DONE
+------------------------------
+
+-------------------- TUNING DONE --------------------
